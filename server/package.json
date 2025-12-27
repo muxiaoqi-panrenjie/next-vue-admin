@@ -36,7 +36,10 @@
     "logs:list": "bash scripts/view-logs.sh -l",
     "deploy:prod": "node scripts/deploy.cjs prod",
     "deploy:test": "node scripts/deploy.cjs test",
-    "deploy:dev": "node scripts/deploy.cjs dev"
+    "deploy:dev": "node scripts/deploy.cjs dev",
+    "changelog:generate": "conventional-changelog -p conventionalcommits -i ../CHANGELOG.md -s -r 0",
+    "changelog:update": "conventional-changelog -p conventionalcommits -i ../CHANGELOG.md -s",
+    "postversion": "npm run changelog:update && git add ../CHANGELOG.md && git commit -m 'chore: update CHANGELOG.md for v'$npm_package_version"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
@@ -122,6 +125,7 @@
     "@typescript-eslint/parser": "^6.0.0",
     "chalk": "^4.1.2",
     "compressing": "^2.0.0",
+    "conventional-changelog-cli": "^5.0.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.42.0",
     "eslint-config-prettier": "^9.0.0",

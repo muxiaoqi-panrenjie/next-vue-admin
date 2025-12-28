@@ -44,8 +44,8 @@
     "release": "sa release",
     "typecheck": "vue-tsc --noEmit --skipLibCheck",
     "update-pkg": "sa update-pkg",
-    "changelog:generate": "conventional-changelog -p conventionalcommits -i ../CHANGELOG.md -s -r 0",
-    "changelog:update": "conventional-changelog -p conventionalcommits -i ../CHANGELOG.md -s",
+    "changelog:generate": "node scripts/generate-changelog.cjs",
+    "changelog:update": "node scripts/generate-changelog.cjs",
     "postversion": "npm run changelog:update && git add ../CHANGELOG.md && git commit -m 'chore: update CHANGELOG.md for v'$npm_package_version"
   },
   "dependencies": {
@@ -128,7 +128,8 @@
   },
   "simple-git-hooks": {
     "commit-msg": "pnpm sa git-commit-verify && commitlint --edit $1",
-    "pre-commit": "pnpm typecheck && pnpm lint && git diff --exit-code"
+    "pre-commit": "pnpm typecheck && pnpm lint && git diff --exit-code",
+    "post-commit": "npm run changelog:update && git add ../CHANGELOG.md && git commit --amend --no-edit --no-verify"
   },
   "website": "https://ruoyi.xlsea.cn"
 }
